@@ -1,0 +1,104 @@
+mysql> create database college;
+Query OK, 1 row affected (0.41 sec)
+
+mysql> use college;
+Database changed
+mysql> create table student(roll_no int(3),name varchar(30),DOB DATE,ADDRESS TEXT(40),phno varchar(10),bloodgrp varchar(20));
+Query OK, 0 rows affected, 1 warning (1.55 sec)
+
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field	| Type    	| Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| roll_no  | int     	| YES  | 	| NULL	|   	|
+| name 	| varchar(30) | YES  | 	| NULL	|   	|
+| DOB  	| date    	| YES  | 	| NULL	|   	|
+| ADDRESS  | tinytext	| YES  | 	| NULL	|   	|
+| phno 	| varchar(10) | YES  | 	| NULL	|   	|
+| bloodgrp | varchar(20) | YES  | 	| NULL	|   	|
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.24 sec)
+
+mysql> insert into student(roll_no,name,DOB,ADDRESS,phno,bloodgrp)VALUES(1,ahlada,1/2/2,sreemakom,12345678,b);
+ERROR 1054 (42S22): Unknown column 'ahlada' in 'field list'
+mysql> insert into student(roll_no,name,DOB,ADDRESS,phno,bloodgrp)VALUES(1,'ahlada',1/2/2,'sreemakom','12345678','b');
+ERROR 1292 (22007): Incorrect date value: '0.250000000000000000' for column 'DOB' at row 1
+mysql> insert into student(roll_no,name,DOB,ADDRESS,phno,bloodgrp)VALUES(1,'ahlada',1/2/2,'sreemakom','12345678','b');
+ERROR 1292 (22007): Incorrect date value: '0.250000000000000000' for column 'DOB' at row 1
+mysql> insert into student(roll_no,name,DOB,ADDRESS,phno,bloodgrp)VALUES(1,'ahlada',1/2/2,'sreemakom','12345678','b');
+ERROR 1292 (22007): Incorrect date value: '0.250000000000000000' for column 'DOB' at row 1
+mysql> insert into student(roll_no,name,DOB,ADDRESS,phno,bloodgrp)VALUES(1,'ahlada','1/2/2','sreemakom','12345678','b');
+Query OK, 1 row affected, 1 warning (0.14 sec)
+
+mysql> select * from student;
++---------+--------+------------+-----------+----------+----------+
+| roll_no | name   | DOB    	| ADDRESS   | phno 	| bloodgrp |
++---------+--------+------------+-----------+----------+----------+
+|   	1 | ahlada | 0001-02-02 | sreemakom | 12345678 | b    	|
++---------+--------+------------+-----------+----------+----------+
+1 row in set (0.00 sec)
+
+mysql> create table course;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table course(course_id int(4),course_name varchar(50),course_duration int(20));
+Query OK, 0 rows affected, 2 warnings (1.06 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| course        	|
+| student       	|
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql>
+ alter table student drop bloodgrp;
+Query OK, 0 rows affected (2.30 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student add column adharno. int(12);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '. int(12)' at line 1
+mysql> alter table student add column adharnum int(12);
+Query OK, 0 rows affected, 1 warning (0.98 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> select * from student;
++---------+--------+------------+-----------+----------+----------+
+| roll_no | name   | DOB    	| ADDRESS   | phno 	| adharnum |
++---------+--------+------------+-----------+----------+----------+
+|   	1 | ahlada | 0001-02-02 | sreemakom | 12345678 | 	NULL |
++---------+--------+------------+-----------+----------+----------+
+1 row in set (0.04 sec)
+
+mysql> alter table student modify phno int(10);
+Query OK, 1 row affected, 1 warning (3.42 sec)
+Records: 1  Duplicates: 0  Warnings: 1
+
+mysql> select * from studnet;
+ERROR 1146 (42S02): Table 'college.studnet' doesn't exist
+mysql> select * from student;
++---------+--------+------------+-----------+----------+----------+
+| roll_no | name   | DOB    	| ADDRESS   | phno 	| adharnum |
++---------+--------+------------+-----------+----------+----------+
+|   	1 | ahlada | 0001-02-02 | sreemakom | 12345678 | 	NULL |
++---------+--------+------------+-----------+----------+----------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> drop table student;
+Query OK, 0 rows affected (0.81 sec)
+
+mysql> drop table course;
+Query OK, 0 rows affected (0.64 sec)
+
+mysql> show tables;
+Empty set (0.32 sec)
+
+mysql> drop database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> drop database college;
+Query OK, 0 rows affected (0.41 sec)
+
+
+
