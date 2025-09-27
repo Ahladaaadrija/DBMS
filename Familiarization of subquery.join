@@ -1,0 +1,775 @@
+mysql> create database subquery;
+Query OK, 1 row affected (0.23 sec)
+
+mysql> use subquery
+Database changed
+mysql> create table regions(region_id int,region_name varchar(20));
+Query OK, 0 rows affected (1.86 sec)
+
+mysql> create table countries(country_id int,country_name varchar(20),region_id int);
+Query OK, 0 rows affected (0.86 sec)
+
+mysql> create table locations(location_id int,street address varchar(20),postal_code int,city varchar(20),state_province varchar(20),country_id int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'address varchar(20),postal_code int,city varchar(20),state_province varchar(20),' at line 1
+mysql> create table locations(location_id int,street address varchar(20),postal_code int,city varchar(20),state_province varchar(20),country_id int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'address varchar(20),postal_code int,city varchar(20),state_province varchar(20),' at line 1
+mysql> create table locations(location_id int,street_address varchar(50),postal_code int,city varchar(20),state_province varchar(20),country_id int);
+Query OK, 0 rows affected (0.74 sec)
+
+mysql> create table departments(department_id int,department_name varchar(20),location_id int);
+Query OK, 0 rows affected (1.72 sec)
+
+mysql> create table employees(employee_id int,first_name varchar(20),last_name varchar(20),email varchar(20),phone_number varchar(20),hire_date date,job_id int,salary int,manager_id int,department_id int);
+Query OK, 0 rows affected (2.44 sec)
+
+mysql> create table dependents(dependent_id int,first_name varchar(20),last_name varchar(20),relationships varchar(20),employee_id int);
+Query OK, 0 rows affected (1.30 sec)
+
+mysql> create table jobs(job_id int,job_title varchar(20),min_salary int,max_salary int);
+Query OK, 0 rows affected (0.77 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_subquery |
++--------------------+
+| countries          |
+| departments        |
+| dependents         |
+| employees          |
+| jobs               |
+| locations          |
+| regions            |
++--------------------+
+7 rows in set (0.03 sec)
+
+mysql> alter table countries
+    -> add primary key(country_id);
+Query OK, 0 rows affected (1.70 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table regions add primary key(region_id);
+Query OK, 0 rows affected (1.66 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table locations add primary key(location_id);
+Query OK, 0 rows affected (1.79 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table departments add primary key(department_id);
+Query OK, 0 rows affected (1.65 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees add primary key(employee_id);
+Query OK, 0 rows affected (1.97 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table dependents add primary key(dependent_id);
+Query OK, 0 rows affected (1.96 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table jobs add primary key(job_id);
+Query OK, 0 rows affected (1.83 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into regions values(1,'region 1');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into regions values(2,'region 2');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into regions values(3,'region 3');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into regions values(4,'region 4');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into regions values(5,'region 5');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select *from regions;
++-----------+-------------+
+| region_id | region_name |
++-----------+-------------+
+|         1 | region 1    |
+|         2 | region 2    |
+|         3 | region 3    |
+|         4 | region 4    |
+|         5 | region 5    |
++-----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into countries values(101,'India',1);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into countries values(102,'America',2);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into countries values(103,'Canada',3);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into countries values(104,'UK',4);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into countries values(105,'Qatar',5);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select *from countries;
++------------+--------------+-----------+
+| country_id | country_name | region_id |
++------------+--------------+-----------+
+|        101 | India        |         1 |
+|        102 | America      |         2 |
+|        103 | Canada       |         3 |
+|        104 | UK           |         4 |
+|        105 | Qatar        |         5 |
++------------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into locations values(1500,'123 American Junction',11001,'Delhi','Delhi',101);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into locations values(1600,'123 Thoppumpadi',11002,'Washington','California',102);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into locations values(1700,'123 Navas Junction',11003,'Germany','Otawa',103);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into locations values(1800,'123 Vilas Nivas',11004,'Florida','Canada',104);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into locations values(1900,'123 Mahesh Nivas',11005,'Doha','Doha',105);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select *from locations
+    -> ;
++-------------+-----------------------+-------------+------------+----------------+------------+
+| location_id | street_address        | postal_code | city       | state_province | country_id |
++-------------+-----------------------+-------------+------------+----------------+------------+
+|        1500 | 123 American Junction |       11001 | Delhi      | Delhi          |        101 |
+|        1600 | 123 Thoppumpadi       |       11002 | Washington | California     |        102 |
+|        1700 | 123 Navas Junction    |       11003 | Germany    | Otawa          |        103 |
+|        1800 | 123 Vilas Nivas       |       11004 | Florida    | Canada         |        104 |
+|        1900 | 123 Mahesh Nivas      |       11005 | Doha       | Doha           |        105 |
++-------------+-----------------------+-------------+------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into departments values(1,'Finance',1500);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into departments values(2,'Taxation',1600);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into departments values(3,'HR',1700);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into departments values(4,'Accounts',1800);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into departments values(5,'Statistics',1900);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select *from departments;
++---------------+-----------------+-------------+
+| department_id | department_name | location_id |
++---------------+-----------------+-------------+
+|             1 | Finance         |        1500 |
+|             2 | Taxation        |        1600 |
+|             3 | HR              |        1700 |
+|             4 | Accounts        |        1800 |
+|             5 | Statistics      |        1900 |
++---------------+-----------------+-------------+
+5 rows in set (0.01 sec)
+
+mysql> insert into jobs values(1,'Manager',5000,10000);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into jobs values(2,'AssManager',3000,8000);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into jobs values(3,'HR EXECUTIVE',5000,9000);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into jobs values(4,'EXECUTIVE',6000,10000);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into jobs values(5,'Designer',500,1000);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select *from jobs;
++--------+--------------+------------+------------+
+| job_id | job_title    | min_salary | max_salary |
++--------+--------------+------------+------------+
+|      1 | Manager      |       5000 |      10000 |
+|      2 | AssManager   |       3000 |       8000 |
+|      3 | HR EXECUTIVE |       5000 |       9000 |
+|      4 | EXECUTIVE    |       6000 |      10000 |
+|      5 | Designer     |        500 |       1000 |
++--------+--------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table jobs
+    -> 
+
+^C
+mysql> update jobs
+    -> set max_salary=20000
+    -> where job_title='Manager';
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update jobs set max_salary=32000 where job_title='AssManager';
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> insert into employees values(10,'Smith','Jackson','smith@gmail.com','8958698569',09-08-2025,1,15000,101,1);
+ERROR 1292 (22007): Incorrect date value: '-2024' for column 'hire_date' at row 1
+mysql> insert into employees values(10,'Smith','Jackson','smith@gmail.com','8958698569','09-08-2025',1,15000,101,1);
+ERROR 1292 (22007): Incorrect date value: '09-08-2025' for column 'hire_date' at row 1
+mysql> insert into employees values(10,'Smith','Jackson','smith@gmail.com','8958698569','2025-09-08',1,15000,101,1);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into employees values(20,'Zahra','Fathima','zahra@gmail.com','8958698785','2025-09-08',2,10000,201,2);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into employees values(30,'Sugunan','P P','sugunan@gmail.com','8958645785','2025-08-08',3,7000,301,3);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into employees values(40,'Ramesh','Taylor','ramesh@gmail.com','8923645785','2025-06-05',4,8000,401,4);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into employees values(50,'Vivek','Sharma','vivek@gmail.com','8944125785','2025-04-07',5,800,501,5);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select *from employees;
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email             | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+|          10 | Smith      | Jackson   | smith@gmail.com   | 8958698569   | 2025-09-08 |      1 |  15000 |        101 |             1 |
+|          20 | Zahra      | Fathima   | zahra@gmail.com   | 8958698785   | 2025-09-08 |      2 |  10000 |        201 |             2 |
+|          30 | Sugunan    | P P       | sugunan@gmail.com | 8958645785   | 2025-08-08 |      3 |   7000 |        301 |             3 |
+|          40 | Ramesh     | Taylor    | ramesh@gmail.com  | 8923645785   | 2025-06-05 |      4 |   8000 |        401 |             4 |
+|          50 | Vivek      | Sharma    | vivek@gmail.com   | 8944125785   | 2025-04-07 |      5 |    800 |        501 |             5 |
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into dependents values(1,'Steve','Jobs','Brother',10);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into dependents values(2,'Zuhra','Fathima','Sister',20);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into dependents values(3,'Ramu','Kumar','Father',30);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into dependents values(4,'Somesh','Taylor','Cousin',40);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into dependents values(5,'Vishnu','Sharma','Brother',50);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select *from dependents;
++--------------+------------+-----------+---------------+-------------+
+| dependent_id | first_name | last_name | relationships | employee_id |
++--------------+------------+-----------+---------------+-------------+
+|            1 | Steve      | Jobs      | Brother       |          10 |
+|            2 | Zuhra      | Fathima   | Sister        |          20 |
+|            3 | Ramu       | Kumar     | Father        |          30 |
+|            4 | Somesh     | Taylor    | Cousin        |          40 |
+|            5 | Vishnu     | Sharma    | Brother       |          50 |
++--------------+------------+-----------+---------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from regions;
++-----------+-------------+
+| region_id | region_name |
++-----------+-------------+
+|         1 | region 1    |
+|         2 | region 2    |
+|         3 | region 3    |
+|         4 | region 4    |
+|         5 | region 5    |
++-----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from countries;
++------------+--------------+-----------+
+| country_id | country_name | region_id |
++------------+--------------+-----------+
+|        101 | India        |         1 |
+|        102 | America      |         2 |
+|        103 | Canada       |         3 |
+|        104 | UK           |         4 |
+|        105 | Qatar        |         5 |
++------------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select *from locations;
++-------------+-----------------------+-------------+------------+----------------+------------+
+| location_id | street_address        | postal_code | city       | state_province | country_id |
++-------------+-----------------------+-------------+------------+----------------+------------+
+|        1500 | 123 American Junction |       11001 | Delhi      | Delhi          |        101 |
+|        1600 | 123 Thoppumpadi       |       11002 | Washington | California     |        102 |
+|        1700 | 123 Navas Junction    |       11003 | Germany    | Otawa          |        103 |
+|        1800 | 123 Vilas Nivas       |       11004 | Florida    | Canada         |        104 |
+|        1900 | 123 Mahesh Nivas      |       11005 | Doha       | Doha           |        105 |
++-------------+-----------------------+-------------+------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from departments;
++---------------+-----------------+-------------+
+| department_id | department_name | location_id |
++---------------+-----------------+-------------+
+|             1 | Finance         |        1500 |
+|             2 | Taxation        |        1600 |
+|             3 | HR              |        1700 |
+|             4 | Accounts        |        1800 |
+|             5 | Statistics      |        1900 |
++---------------+-----------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from employees;
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email             | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+|          10 | Smith      | Jackson   | smith@gmail.com   | 8958698569   | 2025-09-08 |      1 |  15000 |        101 |             1 |
+|          20 | Zahra      | Fathima   | zahra@gmail.com   | 8958698785   | 2025-09-08 |      2 |  10000 |        201 |             2 |
+|          30 | Sugunan    | P P       | sugunan@gmail.com | 8958645785   | 2025-08-08 |      3 |   7000 |        301 |             3 |
+|          40 | Ramesh     | Taylor    | ramesh@gmail.com  | 8923645785   | 2025-06-05 |      4 |   8000 |        401 |             4 |
+|          50 | Vivek      | Sharma    | vivek@gmail.com   | 8944125785   | 2025-04-07 |      5 |    800 |        501 |             5 |
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from dependents;
++--------------+------------+-----------+---------------+-------------+
+| dependent_id | first_name | last_name | relationships | employee_id |
++--------------+------------+-----------+---------------+-------------+
+|            1 | Steve      | Jobs      | Brother       |          10 |
+|            2 | Zuhra      | Fathima   | Sister        |          20 |
+|            3 | Ramu       | Kumar     | Father        |          30 |
+|            4 | Somesh     | Taylor    | Cousin        |          40 |
+|            5 | Vishnu     | Sharma    | Brother       |          50 |
++--------------+------------+-----------+---------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from jobs;
++--------+--------------+------------+------------+
+| job_id | job_title    | min_salary | max_salary |
++--------+--------------+------------+------------+
+|      1 | Manager      |       5000 |      20000 |
+|      2 | AssManager   |       3000 |      32000 |
+|      3 | HR EXECUTIVE |       5000 |       9000 |
+|      4 | EXECUTIVE    |       6000 |      10000 |
+|      5 | Designer     |        500 |       1000 |
++--------+--------------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select *from employees
+    -> where department_id in(select department_id from departments where location_id=1700);
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email             | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+|          30 | Sugunan    | P P       | sugunan@gmail.com | 8958645785   | 2025-08-08 |      3 |   7000 |        301 |             3 |
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+1 row in set (0.02 sec)
+
+mysql> select *from employees where department_id in(select department_id from departments where location_id<>1700);
++-------------+------------+-----------+------------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email            | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+------------------+--------------+------------+--------+--------+------------+---------------+
+|          10 | Smith      | Jackson   | smith@gmail.com  | 8958698569   | 2025-09-08 |      1 |  15000 |        101 |             1 |
+|          20 | Zahra      | Fathima   | zahra@gmail.com  | 8958698785   | 2025-09-08 |      2 |  10000 |        201 |             2 |
+|          40 | Ramesh     | Taylor    | ramesh@gmail.com | 8923645785   | 2025-06-05 |      4 |   8000 |        401 |             4 |
+|          50 | Vivek      | Sharma    | vivek@gmail.com  | 8944125785   | 2025-04-07 |      5 |    800 |        501 |             5 |
++-------------+------------+-----------+------------------+--------------+------------+--------+--------+------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> select *from employees
+    -> where salary=MAX(salary);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select employee_id,first_name,last_name,MAX(salary) as Salary;
+ERROR 1054 (42S22): Unknown column 'employee_id' in 'field list'
+mysql> select *from employees where salary in (select MAX(salary) from employees);
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email           | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+|          10 | Smith      | Jackson   | smith@gmail.com | 8958698569   | 2025-09-08 |      1 |  15000 |        101 |             1 |
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> select *from employees where salary > (select AVG(salary)from employee);
+ERROR 1146 (42S02): Table 'subquery.employee' doesn't exist
+mysql> select *from employees where salary > (select AVG(salary)from employees);
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email           | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+|          10 | Smith      | Jackson   | smith@gmail.com | 8958698569   | 2025-09-08 |      1 |  15000 |        101 |             1 |
+|          20 | Zahra      | Fathima   | zahra@gmail.com | 8958698785   | 2025-09-08 |      2 |  10000 |        201 |             2 |
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select department_id,department_name from departments 
+    -> where department_id in(select department_id from employees where salary>10000);
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | Finance         |
++---------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> select department_id,department_name from departments where department_id in(select department_id from employees where salary<=10000);
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             2 | Taxation        |
+|             3 | HR              |
+|             4 | Accounts        |
+|             5 | Statistics      |
++---------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees e
+    -> WHERE e.salary > ALL (
+    ->     SELECT MIN(salary)
+    ->     FROM employees
+    ->     GROUP BY department_id
+    -> );
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees e
+    -> WHERE e.salary > ALL (
+    ->     SELECT MIN(salary)
+    ->     FROM employees
+    ->     GROUP BY department_id
+    -> );
+Empty set (0.00 sec)
+
+mysql> alter table countries
+    -> add foreign key(region_id)
+    -> references regions(region_id);
+Query OK, 5 rows affected (2.73 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> desc countries;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| country_id   | int         | NO   | PRI | NULL    |       |
+| country_name | varchar(20) | YES  |     | NULL    |       |
+| region_id    | int         | YES  | MUL | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> `alter table locations
+    `> add foreign key(country_id)
+    `> references countries(country_id);
+    `> 
+    `> 
+
+^C
+mysql> alter table locations
+    -> add foreign key(country_id)
+    -> references countries(country_id);
+Query OK, 5 rows affected (2.51 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> alter table departments add foreign key(location_id) references locations(location_id);
+Query OK, 5 rows affected (2.72 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees add foreign key(department_id) references departments(department_id);
+Query OK, 5 rows affected (2.76 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees add foreign key(job_id) references jobs(job_id);
+Query OK, 5 rows affected (2.90 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> alter table dependents add foreign key(employee_id) references employees(employee_id);
+Query OK, 5 rows affected (3.19 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * 
+    -> FROM employees e
+    -> WHERE salary > ALL (
+    ->     SELECT MIN(salary) 
+    ->     FROM employees 
+    ->     GROUP BY department_id
+    -> );
+Empty set (0.02 sec)
+
+mysql> select *from employees e where salary > ALL(select MIN(salary) from employees group by department_id);
+Empty set (0.00 sec)
+
+mysql> SELECT * 
+    -> FROM employees e
+    -> WHERE salary >= ALL (
+    ->     SELECT MAX(salary) 
+    ->     FROM employees 
+    ->     GROUP BY department_id
+    -> );
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email           | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+|          10 | Smith      | Jackson   | smith@gmail.com | 8958698569   | 2025-09-08 |      1 |  15000 |        101 |             1 |
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(avg_salary) AS avg_of_avg_salaries
+    -> FROM (
+    ->     SELECT AVG(salary) AS avg_salary
+    ->     FROM employees
+    ->     GROUP BY department_id
+    -> ) AS dept_avg;
++---------------------+
+| avg_of_avg_salaries |
++---------------------+
+|       8160.00000000 |
++---------------------+
+1 row in set (0.02 sec)
+
+mysql> SELECT 
+    ->     employee_id,
+    ->     first_name,
+    ->     salary,
+    ->     (SELECT AVG(salary) FROM employees) AS avg_salary,
+    ->     salary - (SELECT AVG(salary) FROM employees) AS salary_difference
+    -> FROM employees;
++-------------+------------+--------+------------+-------------------+
+| employee_id | first_name | salary | avg_salary | salary_difference |
++-------------+------------+--------+------------+-------------------+
+|          10 | Smith      |  15000 |  8160.0000 |         6840.0000 |
+|          20 | Zahra      |  10000 |  8160.0000 |         1840.0000 |
+|          30 | Sugunan    |   7000 |  8160.0000 |        -1160.0000 |
+|          40 | Ramesh     |   8000 |  8160.0000 |         -160.0000 |
+|          50 | Vivek      |    800 |  8160.0000 |        -7360.0000 |
++-------------+------------+--------+------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT employee_id, first_name, salary, department_id
+    -> FROM employees e
+    -> WHERE salary > (
+    ->     SELECT AVG(salary)
+    ->     FROM employees
+    ->     WHERE department_id = e.department_id
+    -> );
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE employee_id NOT IN (
+    ->     SELECT employee_id
+    ->     FROM dependents
+    -> );
+
+mysql> select e.first_name,e.last_name,d.department_name from employees e join departments d on(e.department_id=d.department_id) where e.department_id in (1,2,3);
++------------+-----------+-----------------+
+| first_name | last_name | department_name |
++------------+-----------+-----------------+
+| Smith      | Jackson   | Finance         |
+| Zahra      | Fathima   | Taxation        |
+| Sugunan    | P P       | HR              |
++------------+-----------+-----------------+
+
+mysql> select d.department_name,l.street_address,l.postal_code,c.country_name,r.region_name
+    -> from departments d
+    -> join locations l on(d.location_id=l.location_id)
+    -> join countries c on(l.country_id=c.country_id)
+    -> join regions r on(c.region_id=r.region_id);
+
++-----------------+-----------------------+-------------+--------------+-------------+
+| department_name | street_address        | postal_code | country_name | region_name |
++-----------------+-----------------------+-------------+--------------+-------------+
+| Finance         | 123 American Junction |       11001 | India        | region 1    |
+| Taxation        | 123 Thoppumpadi       |       11002 | America      | region 2    |
+| HR              | 123 Navas Junction    |       11003 | Canada       | region 3    |
+| Accounts        | 123 Vilas Nivas       |       11004 | UK           | region 4    |
+| Statistics      | 123 Mahesh Nivas      |       11005 | Qatar        | region 5    |
++-----------------+-----------------------+-------------+--------------+-------------+
+
+mysql> select e.first_name,e.last_name,e.department_id,d.department_name
+    -> from employees e
+    -> join departments d on(e.department_id=d.department_id)
+    -> ;
++------------+-----------+---------------+-----------------+
+| first_name | last_name | department_id | department_name |
++------------+-----------+---------------+-----------------+
+| Smith      | Jackson   |             1 | Finance         |
+| Zahra      | Fathima   |             2 | Taxation        |
+| Sugunan    | P P       |             3 | HR              |
+| Ramesh     | Taylor    |             4 | Accounts        |
+| Vivek      | Sharma    |             5 | Statistics      |
++------------+-----------+---------------+-----------------+
+
+mysql> select e.first_name,e.last_name,d.department_name,l.city,l.state_province
+    -> from employees e
+    -> join departments d on(e.department_id=d.department_id)
+    -> join locations l on(d.location_id=l.location_id)
+    -> where e.first_name like "%Z%" or e.first_name like "%z%";
++------------+-----------+-----------------+------------+----------------+
+| first_name | last_name | department_name | city       | state_province |
++------------+-----------+-----------------+------------+----------------+
+| Zahra      | Fathima   | Taxation        | Washington | California     |
++------------+-----------+-----------------+------------+----------------+
+
+mysql> select e.first_name,e.last_name,d.department_id,d.department_name
+    -> from employees e
+    -> left join departments d on(e.department_id=d.department_id);
++------------+-----------+---------------+-----------------+
+| first_name | last_name | department_id | department_name |
++------------+-----------+---------------+-----------------+
+| Smith      | Jackson   |             1 | Finance         |
+| Zahra      | Fathima   |             2 | Taxation        |
+| Sugunan    | P P       |             3 | HR              |
+| Ramesh     | Taylor    |             4 | Accounts        |
+| Vivek      | Sharma    |             5 | Statistics      |
++------------+-----------+---------------+-----------------+
+
+mysql> select e.first_name as employee_name,m.first_name as manager_name
+    -> from employees e
+    -> left join employees m on(e.employee_id=m.manager_id);
++---------------+--------------+
+| employee_name | manager_name |
++---------------+--------------+
+| Smith         | NULL         |
+| Zahra         | NULL         |
+| Sugunan       | NULL         |
+| Ramesh        | NULL         |
+| Vivek         | NULL         |
++---------------+--------------+
+
+mysql> SELECT first_name, last_name, department_id
+    -> FROM employees
+    -> WHERE department_id = (
+    ->     SELECT department_id
+    ->     FROM employees
+    ->     WHERE last_name = 'Taylor'
+    -> );
++------------+-----------+---------------+
+| first_name | last_name | department_id |
++------------+-----------+---------------+
+| Ramesh     | Taylor    |             4 |
++------------+-----------+---------------+
+
+mysql> SELECT 
+    ->     j.job_title,
+    ->     CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
+    ->     (j.max_salary - e.salary) AS salary_difference
+    -> FROM 
+    ->     employees e
+    -> JOIN 
+    ->     jobs j ON e.job_id = j.job_id;
++--------------+---------------+-------------------+
+| job_title    | employee_name | salary_difference |
++--------------+---------------+-------------------+
+| Manager      | Smith Jackson |              5000 |
+| AssManager   | Zahra Fathima |             22000 |
+| HR EXECUTIVE | Sugunan P P   |              2000 |
+| EXECUTIVE    | Ramesh Taylor |              2000 |
+| Designer     | Vivek Sharma  |               200 |
++--------------+---------------+-------------------+
+
+
+mysql> SELECT 
+    ->     d.department_name,
+    ->     AVG(e.salary) AS average_salary,
+    ->     COUNT(e.employee_id) AS num_employees
+    -> FROM 
+    ->     employees e
+    -> JOIN 
+    ->     departments d ON e.department_id = d.department_id
+    -> GROUP BY 
+    ->     d.department_name;
++-----------------+----------------+---------------+
+| department_name | average_salary | num_employees |
++-----------------+----------------+---------------+
+| Finance         |     15000.0000 |             1 |
+| Taxation        |     10000.0000 |             1 |
+| HR              |      7000.0000 |             1 |
+| Accounts        |      8000.0000 |             1 |
+| Statistics      |       800.0000 |             1 |
++-----------------+----------------+---------------+
+
+mysql> CREATE VIEW delhi_employees_view AS
+    -> SELECT 
+    ->     CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
+    ->     e.employee_id,
+    ->     e.phone_number,
+    ->     j.job_title,
+    ->     d.department_name,
+    ->     CONCAT(m.first_name, ' ', m.last_name) AS manager_name
+    -> FROM 
+    ->     employees e
+    -> JOIN 
+    ->     jobs j ON e.job_id = j.job_id
+    -> JOIN 
+    ->     departments d ON e.department_id = d.department_id
+    -> JOIN 
+    ->     locations l ON d.location_id = l.location_id
+    -> LEFT JOIN 
+    ->     employees m ON e.manager_id = m.employee_id
+    -> WHERE 
+    ->     l.city = 'Delhi';
+Query OK, 0 rows affected (0.31 sec)
+
+mysql> SELECT * FROM delhi_employees_view;
++---------------+-------------+--------------+-----------+-----------------+--------------+
+| employee_name | employee_id | phone_number | job_title | department_name | manager_name |
++---------------+-------------+--------------+-----------+-----------------+--------------+
+| Smith Jackson |          10 | 8958698569   | Manager   | Finance         | NULL         |
++---------------+-------------+--------------+-----------+-----------------+--------------+
+
+mysql> select employee_name from delhi_employees_view
+    -> where job_title="Manager" and department_name="Finance";
++---------------+
+| employee_name |
++---------------+
+| Smith Jackson |
++---------------+
+
+mysql> UPDATE delhi_employees_view
+    -> SET phone_number = '9999999999'
+    -> WHERE employee_name LIKE 'Smith%';
+ERROR 1288 (HY000): The target table delhi_employees_view of the UPDATE is not updatable
+mysql> UPDATE employees
+    -> SET phone_number = '9999999999'
+    -> WHERE first_name = 'Smith';
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE employee_id NOT IN (
+    ->     SELECT employee_id
+    ->     FROM dependents
+    -> );
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE manager_id = 101
+    -> 
+    -> UNION
+    -> 
+    -> SELECT *
+    -> FROM employees
+    -> WHERE manager_id = 201;
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email           | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+|          10 | Smith      | Jackson   | smith@gmail.com | 9999999999   | 2025-09-08 |      1 |  15000 |        101 |             1 |
+|          20 | Zahra      | Fathima   | zahra@gmail.com | 8958698785   | 2025-09-08 |      2 |  10000 |        201 |             2 |
++-------------+------------+-----------+-----------------+--------------+------------+--------+--------+------------+---------------+
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE employee_id IN (
+    ->     SELECT employee_id
+    ->     FROM dependents
+    -> );
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+| employee_id | first_name | last_name | email             | phone_number | hire_date  | job_id | salary | manager_id | department_id |
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
+|          10 | Smith      | Jackson   | smith@gmail.com   | 9999999999   | 2025-09-08 |      1 |  15000 |        101 |             1 |
+|          20 | Zahra      | Fathima   | zahra@gmail.com   | 8958698785   | 2025-09-08 |      2 |  10000 |        201 |             2 |
+|          30 | Sugunan    | P P       | sugunan@gmail.com | 8958645785   | 2025-08-08 |      3 |   7000 |        301 |             3 |
+|          40 | Ramesh     | Taylor    | ramesh@gmail.com  | 8923645785   | 2025-06-05 |      4 |   8000 |        401 |             4 |
+|          50 | Vivek      | Sharma    | vivek@gmail.com   | 8944125785   | 2025-04-07 |      5 |    800 |        501 |             5 |
++-------------+------------+-----------+-------------------+--------------+------------+--------+--------+------------+---------------+
