@@ -1,0 +1,499 @@
+mysql> insert into Employee values(1,'Govind','2025-07-15','Sreevilas Sasthamcotta',9605,5,20000);
+Query OK, 1 row affected (0.23 sec)
+
+mysql> insert into Employee values(2,'Ahlada','2025-07-15','Sreemakom Thidanad',7589684596,5,10000);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into Employee values(3,'Gowtham','2025-07-15','Nampattu Haripad',7854896523,5,15000);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into Employee values(4,'Jayaraj','2025-07-15','Kaatumukku Chengannur',8958965478,5,15000);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Employee values(5,'Aswin','2025-07-15','Paduvilangad Chengannur',5968745896,5,20000);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Employee values(6,'Albin','2025-07-15','Kunathumukk Thiruvalla',8789564256,5,20000); 
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into Employee values(7,'Sourav','2025-07-15','Kaatilethara Chengannur',5896587458,5,6000);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into Employee values(8,'Aaarav','2025-07-15','Sagar Vilas',4587896589,5,6000);
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into Employee values(9,'Suresh','2025-07-15','Nipa Vilas',98568741589,5,7000);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Employee values(10,'Vivek','2025-07-15','Soman Vilas',9856963256,5,8000);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> update Employee
+    -> set designation='Manager'
+    -> where Empno=1;
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='Manager' where Empno=2;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='AssManager' where Empno=3;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='Officer' where Empno=4;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='NodalOfficer' where Empno=5;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='Customs' where Empno=6;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='AssCustoms' where Empno=7;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='Staff' where Empno=8;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='OfficerStaff' where Empno=9;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='Servant' where Empno=10;
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee
+    -> set deptno='D01'
+    -> where Empno=1;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D01' where Empno=2;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D02' where Empno=3;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D04' where Empno=4;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D05' where Empno=5;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D06' where Empno=6;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D05' where Empno=7;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D04' where Empno=8;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D05' where Empno=9;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set deptno='D05' where Empno=10;
+Query OK, 1 row affected (0.15 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee
+    -> set salary=3000
+    -> where Empno=1;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=7000 where Empno=2;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=22000 where Empno=3;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=25000 where Empno=4;
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=125000 where Empno=5;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=150000 where Empno=6;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=50000 where Empno=7;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=4000 where Empno=8;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=40000 where Empno=9;
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set salary=140000 where Empno=10;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='Computer Assistant' where Empno=9;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee set designation='Computer Assistant' where Empno=6;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Employee
+    -> set EmpName='John'
+    -> where Empno=8;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from Department;
+Empty set (0.01 sec)
+
+mysql> insert into Department values('D02','Computer Science','Chengannur');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into Department values('D01','Science','Kollam');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into Department values('D03','Data Science','Kothamangalam');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into Department values('D04','Bio-Science','Kottayam');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into Department values('D05','Chemo-Science','Kasargod');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into Department values('D06','Chemistry','Muvattupuzha');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into Department values('D07','Physics','Munnar');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into Department values('D08','Malayalam','Mysore');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into Department values('D09','Hindi','Mankamkuzhy');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Department values('D010','Micro SCience','Sooranad');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select *from Department;
++--------+------------------+---------------+
+| Deptno | DeptName         | location      |
++--------+------------------+---------------+
+| D02    | Computer Science | Chengannur    |
+| D01    | Science          | Kollam        |
+| D03    | Data Science     | Kothamangalam |
+| D04    | Bio-Science      | Kottayam      |
+| D05    | Chemo-Science    | Kasargod      |
+| D06    | Chemistry        | Muvattupuzha  |
+| D07    | Physics          | Munnar        |
+| D08    | Malayalam        | Mysore        |
+| D09    | Hindi            | Mankamkuzhy   |
+| D010   | Micro SCience    | Sooranad      |
++--------+------------------+---------------+
+10 rows in set (0.01 sec)
+
+mysql> select *from Employee;
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+| Empno | EmpName | dob        | address                 | mobileno    | deptno | salary | designation        |
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+| 1     | Govind  | 2025-07-15 | Sreevilas Sasthamcotta  | 9605778956  | D01    |   3000 | Manager            |
+| 2     | Ahlada  | 2025-07-15 | Sreemakom Thidanad      | 7589684596  | D01    |   7000 | Manager            |
+| 3     | Gowtham | 2025-07-15 | Nampattu Haripad        | 7854896523  | D02    |  22000 | AssManager         |
+| 4     | Jayaraj | 2025-07-15 | Kaatumukku Chengannur   | 8958965478  | D04    |  25000 | Officer            |
+| 5     | Aswin   | 2025-07-15 | Paduvilangad Chengannur | 5968745896  | D05    | 125000 | NodalOfficer       |
+| 6     | Albin   | 2025-07-15 | Kunathumukk Thiruvalla  | 8789564256  | D06    | 150000 | Computer Assistant |
+| 7     | Sourav  | 2025-07-15 | Kaatilethara Chengannur | 5896587458  | D05    |  50000 | AssCustoms         |
+| 8     | John    | 2025-07-15 | Sagar Vilas             | 4587896589  | D04    |   4000 | Staff              |
+| 9     | Suresh  | 2025-07-15 | Nipa Vilas              | 98568741589 | D05    |  40000 | Computer Assistant |
+| 10    | Vivek   | 2025-07-15 | Soman Vilas             | 9856963256  | D05    | 140000 | Servant            |
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> select Empno,EmpName from Employee
+    -> where deptno='D02';
++-------+---------+
+| Empno | EmpName |
++-------+---------+
+| 3     | Gowtham |
++-------+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Empno,EmpName,designation,deptno,salary from Employee
+    -> order by salary desc;
++-------+---------+--------------------+--------+--------+
+| Empno | EmpName | designation        | deptno | salary |
++-------+---------+--------------------+--------+--------+
+| 6     | Albin   | Computer Assistant | D06    | 150000 |
+| 10    | Vivek   | Servant            | D05    | 140000 |
+| 5     | Aswin   | NodalOfficer       | D05    | 125000 |
+| 7     | Sourav  | AssCustoms         | D05    |  50000 |
+| 9     | Suresh  | Computer Assistant | D05    |  40000 |
+| 4     | Jayaraj | Officer            | D04    |  25000 |
+| 3     | Gowtham | AssManager         | D02    |  22000 |
+| 2     | Ahlada  | Manager            | D01    |   7000 |
+| 8     | John    | Staff              | D04    |   4000 |
+| 1     | Govind  | Manager            | D01    |   3000 |
++-------+---------+--------------------+--------+--------+
+10 rows in set (0.00 sec)
+
+mysql> select Empno,EmpName from Employee
+    -> where salary between 2000 and 5000;
++-------+---------+
+| Empno | EmpName |
++-------+---------+
+| 1     | Govind  |
+| 8     | John    |
++-------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct designation from Employee;
++--------------------+
+| designation        |
++--------------------+
+| Manager            |
+| AssManager         |
+| Officer            |
+| NodalOfficer       |
+| Computer Assistant |
+| AssCustoms         |
+| Staff              |
+| Servant            |
++--------------------+
+8 rows in set (0.02 sec)
+
+mysql> update Employee
+    -> set salary=45000
+    -> where designation='Manager';
+Query OK, 2 rows affected (0.11 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select *from Employee;
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+| Empno | EmpName | dob        | address                 | mobileno    | deptno | salary | designation        |
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+| 1     | Govind  | 2025-07-15 | Sreevilas Sasthamcotta  | 9605778956  | D01    |  45000 | Manager            |
+| 2     | Ahlada  | 2025-07-15 | Sreemakom Thidanad      | 7589684596  | D01    |  45000 | Manager            |
+| 3     | Gowtham | 2025-07-15 | Nampattu Haripad        | 7854896523  | D02    |  22000 | AssManager         |
+| 4     | Jayaraj | 2025-07-15 | Kaatumukku Chengannur   | 8958965478  | D04    |  25000 | Officer            |
+| 5     | Aswin   | 2025-07-15 | Paduvilangad Chengannur | 5968745896  | D05    | 125000 | NodalOfficer       |
+| 6     | Albin   | 2025-07-15 | Kunathumukk Thiruvalla  | 8789564256  | D06    | 150000 | Computer Assistant |
+| 7     | Sourav  | 2025-07-15 | Kaatilethara Chengannur | 5896587458  | D05    |  50000 | AssCustoms         |
+| 8     | John    | 2025-07-15 | Sagar Vilas             | 4587896589  | D04    |   4000 | Staff              |
+| 9     | Suresh  | 2025-07-15 | Nipa Vilas              | 98568741589 | D05    |  40000 | Computer Assistant |
+| 10    | Vivek   | 2025-07-15 | Soman Vilas             | 9856963256  | D05    | 140000 | Servant            |
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> update Employee
+    -> set mobileno='8579784554'
+    -> where EmpName='John';
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from Employee;
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+| Empno | EmpName | dob        | address                 | mobileno    | deptno | salary | designation        |
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+| 1     | Govind  | 2025-07-15 | Sreevilas Sasthamcotta  | 9605778956  | D01    |  45000 | Manager            |
+| 2     | Ahlada  | 2025-07-15 | Sreemakom Thidanad      | 7589684596  | D01    |  45000 | Manager            |
+| 3     | Gowtham | 2025-07-15 | Nampattu Haripad        | 7854896523  | D02    |  22000 | AssManager         |
+| 4     | Jayaraj | 2025-07-15 | Kaatumukku Chengannur   | 8958965478  | D04    |  25000 | Officer            |
+| 5     | Aswin   | 2025-07-15 | Paduvilangad Chengannur | 5968745896  | D05    | 125000 | NodalOfficer       |
+| 6     | Albin   | 2025-07-15 | Kunathumukk Thiruvalla  | 8789564256  | D06    | 150000 | Computer Assistant |
+| 7     | Sourav  | 2025-07-15 | Kaatilethara Chengannur | 5896587458  | D05    |  50000 | AssCustoms         |
+| 8     | John    | 2025-07-15 | Sagar Vilas             | 8579784554  | D04    |   4000 | Staff              |
+| 9     | Suresh  | 2025-07-15 | Nipa Vilas              | 98568741589 | D05    |  40000 | Computer Assistant |
+| 10    | Vivek   | 2025-07-15 | Soman Vilas             | 9856963256  | D05    | 140000 | Servant            |
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from Employee
+    -> where salary=7000;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select EmpName,mobileno from Employee
+    -> where EmpName like 'A%';
++---------+------------+
+| EmpName | mobileno   |
++---------+------------+
+| Ahlada  | 7589684596 |
+| Aswin   | 5968745896 |
+| Albin   | 8789564256 |
++---------+------------+
+3 rows in set (0.02 sec)
+
+mysql> select *from Employee
+    -> where EmpName='___%' and salary>20000;
+Empty set (0.00 sec)
+
+mysql> select *from Employee
+    -> where length(EmpName)>=3
+    -> and salary>20000;
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+| Empno | EmpName | dob        | address                 | mobileno    | deptno | salary | designation        |
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+| 1     | Govind  | 2025-07-15 | Sreevilas Sasthamcotta  | 9605778956  | D01    |  45000 | Manager            |
+| 2     | Ahlada  | 2025-07-15 | Sreemakom Thidanad      | 7589684596  | D01    |  45000 | Manager            |
+| 3     | Gowtham | 2025-07-15 | Nampattu Haripad        | 7854896523  | D02    |  22000 | AssManager         |
+| 4     | Jayaraj | 2025-07-15 | Kaatumukku Chengannur   | 8958965478  | D04    |  25000 | Officer            |
+| 5     | Aswin   | 2025-07-15 | Paduvilangad Chengannur | 5968745896  | D05    | 125000 | NodalOfficer       |
+| 6     | Albin   | 2025-07-15 | Kunathumukk Thiruvalla  | 8789564256  | D06    | 150000 | Computer Assistant |
+| 7     | Sourav  | 2025-07-15 | Kaatilethara Chengannur | 5896587458  | D05    |  50000 | AssCustoms         |
+| 9     | Suresh  | 2025-07-15 | Nipa Vilas              | 98568741589 | D05    |  40000 | Computer Assistant |
+| 10    | Vivek   | 2025-07-15 | Soman Vilas             | 9856963256  | D05    | 140000 | Servant            |
++-------+---------+------------+-------------------------+-------------+--------+--------+--------------------+
+9 rows in set (0.00 sec)
+
+mysql> select *from Employee
+    -> where Empno in (1,2,6);
++-------+---------+------------+------------------------+------------+--------+--------+--------------------+
+| Empno | EmpName | dob        | address                | mobileno   | deptno | salary | designation        |
++-------+---------+------------+------------------------+------------+--------+--------+--------------------+
+| 1     | Govind  | 2025-07-15 | Sreevilas Sasthamcotta | 9605778956 | D01    |  45000 | Manager            |
+| 2     | Ahlada  | 2025-07-15 | Sreemakom Thidanad     | 7589684596 | D01    |  45000 | Manager            |
+| 6     | Albin   | 2025-07-15 | Kunathumukk Thiruvalla | 8789564256 | D06    | 150000 | Computer Assistant |
++-------+---------+------------+------------------------+------------+--------+--------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> select Empno,EmpName from Employee
+    -> where salary between 120000 and 300000;
++-------+---------+
+| Empno | EmpName |
++-------+---------+
+| 5     | Aswin   |
+| 6     | Albin   |
+| 10    | Vivek   |
++-------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select *from Employee
+    -> where designation in ('Manager','Computer Assistant');
++-------+---------+------------+------------------------+-------------+--------+--------+--------------------+
+| Empno | EmpName | dob        | address                | mobileno    | deptno | salary | designation        |
++-------+---------+------------+------------------------+-------------+--------+--------+--------------------+
+| 1     | Govind  | 2025-07-15 | Sreevilas Sasthamcotta | 9605778956  | D01    |  45000 | Manager            |
+| 2     | Ahlada  | 2025-07-15 | Sreemakom Thidanad     | 7589684596  | D01    |  45000 | Manager            |
+| 6     | Albin   | 2025-07-15 | Kunathumukk Thiruvalla | 8789564256  | D06    | 150000 | Computer Assistant |
+| 9     | Suresh  | 2025-07-15 | Nipa Vilas             | 98568741589 | D05    |  40000 | Computer Assistant |
++-------+---------+------------+------------------------+-------------+--------+--------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(deptno) from Employee;
++---------------+
+| count(deptno) |
++---------------+
+|            10 |
++---------------+
+1 row in set (0.05 sec)
+
+mysql> select deptno,count(*) as EmployeeCount
+    -> from Employee
+    -> group by deptno;
++--------+---------------+
+| deptno | EmployeeCount |
++--------+---------------+
+| D01    |             2 |
+| D02    |             1 |
+| D04    |             2 |
+| D05    |             4 |
+| D06    |             1 |
++--------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select deptno,AVG(salary) as AverageSalary
+    -> from Employee
+    -> group by deptno;
++--------+---------------+
+| deptno | AverageSalary |
++--------+---------------+
+| D01    |    45000.0000 |
+| D02    |    22000.0000 |
+| D04    |    14500.0000 |
+| D05    |    88750.0000 |
+| D06    |   150000.0000 |
++--------+---------------+
+5 rows in set (0.04 sec)
+
+mysql> select deptno,SUM(salary) as TotalSalary
+    -> from Employee
+    -> group by deptno;
++--------+-------------+
+| deptno | TotalSalary |
++--------+-------------+
+| D01    |       90000 |
+| D02    |       22000 |
+| D04    |       29000 |
+| D05    |      355000 |
+| D06    |      150000 |
++--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select deptno,MIN(salary) as LowerSalary,MAX(Salary) as TopSalary from Employee group by deptno;
++--------+-------------+-----------+
+| deptno | LowerSalary | TopSalary |
++--------+-------------+-----------+
+| D01    |       45000 |     45000 |
+| D02    |       22000 |     22000 |
+| D04    |        4000 |     25000 |
+| D05    |       40000 |    140000 |
+| D06    |      150000 |    150000 |
++--------+-------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select deptno,AVG(Salary) as AverageSalary
+    -> from Employee
+    -> where deptno <> 'D05'
+    -> group by deptno;
++--------+---------------+
+| deptno | AverageSalary |
++--------+---------------+
+| D01    |    45000.0000 |
+| D02    |    22000.0000 |
+| D04    |    14500.0000 |
+| D06    |   150000.0000 |
++--------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT deptno, AVG(Salary) AS AverageSalary
+    -> FROM Employee
+    -> WHERE deptno <> 'D01'
+    -> GROUP BY deptno
+    -> HAVING AVG(Salary) > 20000
+    -> ORDER BY AverageSalary;
++--------+---------------+
+| deptno | AverageSalary |
++--------+---------------+
+| D02    |    22000.0000 |
+| D05    |    88750.0000 |
+| D06    |   150000.0000 |
++--------+---------------+
+3 rows in set (0.03 sec)
+
+mysql> exit
+Bye
