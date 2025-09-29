@@ -1,0 +1,151 @@
+mysql> create database Constraints;
+Query OK, 1 row affected (0.14 sec)
+
+mysql> use Constraints;
+Database changed
+
+mysql> CREATE TABLE Persons(
+    -> PersonID INT PRIMARY KEY,
+    -> Name VARCHAR(20) NOT NULL,
+    -> Aadhar INT NOT NULL UNIQUE,
+    -> Age INT CHECK(Age>18)
+    -> );
+Query OK, 0 rows affected (1.91 sec)
+
+mysql> CREATE TABLE Orders( OrderID INT PRIMARY KEY, OrderNumber INT NOT NULL, PersonID INT,FOREIGN KEY (PersonID) REFERENCES Persons(PersonID));
+Query OK, 0 rows affected (1.85 sec)
+
+mysql> CREATE TABLE Employee(
+    -> Empno varchar(20),
+    -> EmpName varchar(20),
+    -> dob date,
+    -> address text,
+    -> mobileno int,
+    -> deptno varchar(20),
+    -> salary  int
+    -> );
+Query OK, 0 rows affected (1.32 sec)
+
+mysql> show tables;
++-----------------------+
+| Tables_in_Constraints |
++-----------------------+
+| Employee              |
+| Orders                |
+| Persons               |
++-----------------------+
+3 rows in set (0.07 sec)
+
+mysql> desc Persons;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| PersonID | int         | NO   | PRI | NULL    |       |
+| Name     | varchar(20) | NO   |     | NULL    |       |
+| Aadhar   | int         | NO   | UNI | NULL    |       |
+| Age      | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.11 sec)
+
+mysql> desc Orders;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| OrderID     | int  | NO   | PRI | NULL    |       |
+| OrderNumber | int  | NO   |     | NULL    |       |
+| PersonID    | int  | YES  | MUL | NULL    |       |
++-------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE Employee
+    -> ADD PRIMARY KEY(Empno);
+Query OK, 0 rows affected (1.94 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Employee;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Empno    | varchar(20) | NO   | PRI | NULL    |       |
+| EmpName  | varchar(20) | YES  |     | NULL    |       |
+| dob      | date        | YES  |     | NULL    |       |
+| address  | text        | YES  |     | NULL    |       |
+| mobileno | int         | YES  |     | NULL    |       |
+| deptno   | varchar(20) | YES  |     | NULL    |       |
+| salary   | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Department(
+    -> Deptno varchar(20),
+    -> Deptname varchar(20),
+    -> location varchar(20)
+    -> );
+Query OK, 0 rows affected (0.64 sec)
+
+mysql> show tables;
++-----------------------+
+| Tables_in_Constraints |
++-----------------------+
+| Department            |
+| Employee              |
+| Orders                |
+| Persons               |
++-----------------------+
+4 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Department
+    -> ADD PRIMARY KEY(Deptno)
+    -> ;
+Query OK, 0 rows affected (1.61 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE Employee
+    -> ADD FOREIGN KEY(Deptno)
+    -> REFERENCES Department(Deptno)
+    -> ON DELETE CASCADE;
+Query OK, 0 rows affected (2.30 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Orders;
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| OrderID     | int  | NO   | PRI | NULL    |       |
+| OrderNumber | int  | NO   |     | NULL    |       |
+| PersonID    | int  | YES  | MUL | NULL    |       |
++-------------+------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> ALTER TABLE Orders
+    -> DROP PRIMARY KEY;
+Query OK, 0 rows affected (2.82 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Deptno   | varchar(20) | NO   | PRI | NULL    |       |
+| Deptname | varchar(20) | YES  |     | NULL    |       |
+| location | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> DROP TABLE Orders;
+Query OK, 0 rows affected (0.55 sec)
+
+mysql> DROP TABLE Employee;
+Query OK, 0 rows affected (0.45 sec)
+
+mysql> DROP TABLE Department;
+Query OK, 0 rows affected (0.49 sec)
+
+mysql> DROP TABLE Persons;
+Query OK, 0 rows affected (0.54 sec)
+
+mysql> DROP DATABASE Constraints;
+Query OK, 0 rows affected (0.39 sec)
+
+mysql> exit
+Bye
