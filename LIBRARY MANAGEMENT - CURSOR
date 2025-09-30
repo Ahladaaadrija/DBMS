@@ -1,0 +1,74 @@
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE books_issue_register()
+    -> BEGIN  
+    ->     DECLARE v_issueid INT;
+    ->     DECLARE v_doi DATE;
+    ->     DECLARE v_exp_dor DATE;
+    ->     DECLARE v_memberid INT;
+    ->     DECLARE flag INT DEFAULT 0;
+    -> 
+    ->     -- Cursor definition
+    ->     DECLARE cur CURSOR FOR  
+    ->         SELECT Issue_id, Date_of_issue, Expected_date_of_return, Member_id  
+    ->         FROM BOOK_ISSUE;
+    -> 
+    ->     -- Handler when no more rows
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND  
+    ->         SET flag = 1;
+    -> 
+    ->     OPEN cur;
+    -> 
+    ->     get_list: LOOP
+    ->         FETCH cur INTO v_issueid, v_doi, v_exp_dor, v_memberid;
+    ->         IF flag = 1 THEN  
+    ->             LEAVE get_list;
+    ->         END IF;
+    -> 
+    ->         -- Display formatted output
+    ->         SELECT CONCAT(v_issueid, ':', v_doi, ':', v_exp_dor, ':', v_memberid) AS register;
+    ->     END LOOP get_list;
+    -> 
+    ->     CLOSE cur;
+    -> END //
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL books_issue_register();
++---------------------------+
+| register                  |
++---------------------------+
+| 1:2023-10-01:2023-10-15:1 |
++---------------------------+
+1 row in set (0.04 sec)
+
++---------------------------+
+| register                  |
++---------------------------+
+| 2:2023-09-20:2023-10-04:2 |
++---------------------------+
+1 row in set (0.04 sec)
+
++---------------------------+
+| register                  |
++---------------------------+
+| 3:2023-09-25:2023-10-09:3 |
++---------------------------+
+1 row in set (0.04 sec)
+
++---------------------------+
+| register                  |
++---------------------------+
+| 4:2023-10-05:2023-10-19:4 |
++---------------------------+
+1 row in set (0.04 sec)
+
++---------------------------+
+| register                  |
++---------------------------+
+| 5:2023-10-08:2023-10-22:5 |
++---------------------------+
+1 row in set (0.04 sec)
+
+Query OK, 0 rows affected (0.04 sec)
