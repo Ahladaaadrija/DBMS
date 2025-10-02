@@ -1,0 +1,58 @@
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE Modify (
+    ->     IN s1 INT,            -- Book_id
+    ->     IN s2 VARCHAR(30),    -- Title
+    ->     IN s3 INT,            -- Language_id
+    ->     IN s4 DECIMAL(10,2),  -- MRP
+    ->     IN s5 INT,            -- Publisher_id
+    ->     IN s6 DATE,           -- Published_date
+    ->     IN s7 INT,            -- Volume
+    ->     IN s8 VARCHAR(20),    -- Status
+    ->     IN s9 INT             -- Operation: 1=Add, 2=Update, 3=Delete
+    -> )
+    -> BEGIN
+    ->     IF s9 = 1 THEN
+    ->         -- Insert new book
+    ->         INSERT INTO BOOK(Book_id, Title, Language_id, MRP, Publisher_id, Published_date, Volume, Status)
+    ->         VALUES (s1, s2, s3, s4, s5, s6, s7, s8);
+    -> 
+    ->     ELSEIF s9 = 2 THEN
+    ->         -- Update existing book
+    ->         UPDATE BOOK
+    ->         SET Title = s2,
+    ->             Language_id = s3,
+    ->             MRP = s4,
+    ->             Publisher_id = s5,
+    ->             Published_date = s6,
+    ->             Volume = s7,
+    ->             Status = s8
+    ->         WHERE Book_id = s1;
+    -> 
+    ->     ELSEIF s9 = 3 THEN
+    ->         -- Delete book
+    ->         DELETE FROM BOOK
+    ->         WHERE Book_id = s1;
+    ->     END IF;
+    -> END //
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL Modify(6, 'Kite Runner', 1, 100.00, 2, '2020-09-04', 1, 'Available', 1);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> SELECT * FROM BOOK;
++---------+-------------------------------+-------------+--------+--------------+----------------+--------+-----------+
+| Book_id | Title                         | Language_id | MRP    | Publisher_id | Published_date | Volume | Status    |
++---------+-------------------------------+-------------+--------+--------------+----------------+--------+-----------+
+|       1 | To Kill a Mockingbird         |           1 |  25.00 |            1 | 1960-07-11     |      1 | Available |
+|       2 | One Hundred Years of Solitude |           2 |  30.00 |            2 | 1967-05-30     |      1 | Available |
+|       3 | Le Petit Prince               |           3 |  20.00 |            3 | 1943-04-06     |      1 | Issued    |
+|       4 | Die Verwandlung               |           4 |  15.00 |            4 | 1915-10-01     |      1 | Available |
+|       5 | Norwegian Wood                |           5 |  28.50 |            5 | 1987-09-04     |      1 | Reserved  |
+|       6 | Kite Runner                   |           1 | 100.00 |            2 | 2020-09-04     |      1 | Available |
++---------+-------------------------------+-------------+--------+--------------+----------------+--------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> 
