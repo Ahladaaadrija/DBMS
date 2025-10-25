@@ -1,0 +1,35 @@
+mysql> 
+mysql> -- History table with old values
+mysql> SELECT * FROM History;
++-----------+-----------+-------------+---------+--------------+-----------------------+--------------+--------+
+| Member_id | Name      | Branch_code | Roll_no | Ph_no        | Email                 | Date_of_join | Status |
++-----------+-----------+-------------+---------+--------------+-----------------------+--------------+--------+
+|         2 | Bob Smith | ME02        |  234567 | 890-123-4567 | bob.smith@example.com | 2023-01-15   | Active |
++-----------+-----------+-------------+---------+--------------+-----------------------+--------------+--------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE Member SET Status = "Inactive" WHERE Member_id = 1;
+ERROR 1146 (42S02): Table 'librarymgmt.Member' doesn't exist
+mysql> UPDATE MEMBER
+    -> SET Status = 'Inactive'
+    -> WHERE Member_id = 1;
+Query OK, 1 row affected (0.18 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM MEMBER WHERE Member_id = 1;
++-----------+---------------+-------------+-------------+--------------+---------------------+--------------+----------+
+| Member_id | Name          | Branch_code | Roll_Number | Phone_number | Email_id            | Date_of_join | Status   |
++-----------+---------------+-------------+-------------+--------------+---------------------+--------------+----------+
+|         1 | Alice Johnson | CS01        | 123456      | 789-012-3456 | alice.j@example.com | 2022-09-01   | Inactive |
++-----------+---------------+-------------+-------------+--------------+---------------------+--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM History WHERE Member_id = 1;
++-----------+---------------+-------------+---------+--------------+---------------------+--------------+--------+
+| Member_id | Name          | Branch_code | Roll_no | Ph_no        | Email               | Date_of_join | Status |
++-----------+---------------+-------------+---------+--------------+---------------------+--------------+--------+
+|         1 | Alice Johnson | CS01        |  123456 | 789-012-3456 | alice.j@example.com | 2022-09-01   | Active |
++-----------+---------------+-------------+---------+--------------+---------------------+--------------+--------+
+1 row in set (0.00 sec)
+
+mysql> 
