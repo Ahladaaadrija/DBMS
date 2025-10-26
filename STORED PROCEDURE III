@@ -1,0 +1,98 @@
+mysql> CREATE DATABASE employees;
+Query OK, 1 row affected (0.36 sec)
+
+mysql> USE employees;
+Database changed
+mysql> -- City table
+mysql> CREATE TABLE city (
+    ->     city_name VARCHAR(20),
+    ->     postal_code INT PRIMARY KEY NOT NULL,
+    ->     state VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.79 sec)
+
+mysql> 
+mysql> -- Employee table
+mysql> CREATE TABLE employee (
+    ->     emp_id INT NOT NULL PRIMARY KEY,
+    ->     first_name VARCHAR(20),
+    ->     last_name VARCHAR(20),
+    ->     email_id VARCHAR(50),
+    ->     phone_no VARCHAR(20),
+    ->     hire_date DATE,
+    ->     salary DECIMAL(10,2),
+    ->     postal_code INT,
+    ->     FOREIGN KEY (postal_code) REFERENCES city(postal_code)
+    -> );
+Query OK, 0 rows affected (1.56 sec)
+
+mysql> 
+mysql> -- Department table
+mysql> CREATE TABLE department (
+    ->     manager_id INT,
+    ->     dept_name VARCHAR(20) PRIMARY KEY NOT NULL,
+    ->     FOREIGN KEY (manager_id) REFERENCES employee(emp_id)
+    -> );
+Query OK, 0 rows affected (1.39 sec)
+
+mysql> -- Insert Cities
+mysql> INSERT INTO city (city_name, postal_code, state) VALUES
+    -> ('Thrikkedilthanam', 686523, 'Kerala'),
+    -> ('Changanassery', 686535, 'Kerala'),
+    -> ('Pala', 686536, 'Kerala'),
+    -> ('Kadaplamattam', 686545, 'Kerala'),
+    -> ('Erode', 686589, 'Tamil Nadu');
+Query OK, 5 rows affected (0.12 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> -- Insert Employees
+mysql> INSERT INTO employee (emp_id, first_name, last_name, email_id, phone_no, hire_date, salary, postal_code) VALUES
+    -> (101, 'John', 'Doe', 'jdoe@example.com', '1234567890', '2020-01-15', 12000, 686523),
+    -> (102, 'Jane', 'Smith', 'jsmith@example.com', '9876543210', '2019-03-10', 8000, 686535),
+    -> (103, 'Alice', 'Johnson', 'ajohnson@example.com', '5556667777', '2018-11-25', 15000, 686536),
+    -> (104, 'Robert', 'Taylor', 'rtaylor@example.com', '8889990000', '2021-07-01', 11000, 686545),
+    -> (105, 'Linda', 'Williams', 'lwilliams@example.com', '4445556666', '2022-05-12', 9500, 686589);
+Query OK, 5 rows affected (0.14 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> 
+mysql> -- Insert Departments
+mysql> INSERT INTO department (manager_id, dept_name) VALUES
+    -> (101, 'HR'),
+    -> (102, 'Finance'),
+    -> (103, 'Marketing'),
+    -> (104, 'IT'),
+    -> (105, 'Sales');
+Query OK, 5 rows affected (0.13 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE GetEmployeesByDept(IN dept VARCHAR(20))
+    -> BEGIN
+    ->     SELECT e.emp_id, e.first_name, e.last_name, e.email_id, e.salary, d.dept_name, c.city_name, c.state
+    ->     FROM employee e
+    ->     JOIN department d ON e.emp_id = d.manager_id OR e.emp_id IN (SELECT manager_id FROM department)
+    ->     JOIN city c ON e.postal_code = c.postal_code
+    ->     WHERE d.dept_name = dept;
+    -> END //
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> CALL GetEmployeesByDept('IT');
++--------+------------+-----------+-----------------------+----------+-----------+------------------+------------+
+| emp_id | first_name | last_name | email_id              | salary   | dept_name | city_name        | state      |
++--------+------------+-----------+-----------------------+----------+-----------+------------------+------------+
+|    101 | John       | Doe       | jdoe@example.com      | 12000.00 | IT        | Thrikkedilthanam | Kerala     |
+|    102 | Jane       | Smith     | jsmith@example.com    |  8000.00 | IT        | Changanassery    | Kerala     |
+|    103 | Alice      | Johnson   | ajohnson@example.com  | 15000.00 | IT        | Pala             | Kerala     |
+|    104 | Robert     | Taylor    | rtaylor@example.com   | 11000.00 | IT        | Kadaplamattam    | Kerala     |
+|    105 | Linda      | Williams  | lwilliams@example.com |  9500.00 | IT        | Erode            | Tamil Nadu |
++--------+------------+-----------+-----------------------+----------+-----------+------------------+------------+
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
