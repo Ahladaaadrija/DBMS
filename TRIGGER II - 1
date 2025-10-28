@@ -1,0 +1,187 @@
+mysql> CREATE TABLE customer (
+    -> acc_no INT PRIMARY KEY,
+    -> cust_name VARCHAR(100),
+    -> avail_balance DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (1.50 sec)
+
+mysql> CREATE TABLE customer_detail (
+    -> detail_id INT AUTO_INCREMENT PRIMARY KEY,
+    -> acc_no INT,
+    -> cust_name VARCHAR(100),
+    -> FOREIGN KEY (acc_no) REFERENCES customer(acc_no)
+    -> );
+Query OK, 0 rows affected (1.40 sec)
+
+mysql> CREATE TABLE mini_statement (
+    -> statement_id INT AUTO_INCREMENT PRIMARY KEY,
+    -> acc_no INT,
+    -> avail_balance DECIMAL(10, 2),
+    -> statement_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -> FOREIGN KEY (acc_no) REFERENCES customer(acc_no)
+    -> );
+Query OK, 0 rows affected (1.65 sec)
+
+mysql> CREATE TABLE micro_statement (
+    -> micro_statement_id INT AUTO_INCREMENT PRIMARY KEY,
+    -> acc_no INT,
+    -> avail_balance DECIMAL(10, 2),
+    -> statement_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    -> FOREIGN KEY (acc_no) REFERENCES customer(acc_no)
+    -> );
+Query OK, 0 rows affected (1.42 sec)
+
+mysql> CREATE TABLE deleted_customer (
+    -> deleted_id INT AUTO_INCREMENT PRIMARY KEY,
+    -> acc_no INT,
+    -> cust_name VARCHAR(100),
+    -> deletion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected (0.65 sec)
+
+mysql> describe customer;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| acc_no        | int           | NO   | PRI | NULL    |       |
+| cust_name     | varchar(100)  | YES  |     | NULL    |       |
+| avail_balance | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> describe customer_detail;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| detail_id | int          | NO   | PRI | NULL    | auto_increment |
+| acc_no    | int          | YES  | MUL | NULL    |                |
+| cust_name | varchar(100) | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> describe mini_statement;
++----------------+---------------+------+-----+-------------------+-------------------+
+| Field          | Type          | Null | Key | Default           | Extra             |
++----------------+---------------+------+-----+-------------------+-------------------+
+| statement_id   | int           | NO   | PRI | NULL              | auto_increment    |
+| acc_no         | int           | YES  | MUL | NULL              |                   |
+| avail_balance  | decimal(10,2) | YES  |     | NULL              |                   |
+| statement_date | timestamp     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++----------------+---------------+------+-----+-------------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> describe micro_statement;
++--------------------+---------------+------+-----+-------------------+-------------------+
+| Field              | Type          | Null | Key | Default           | Extra             |
++--------------------+---------------+------+-----+-------------------+-------------------+
+| micro_statement_id | int           | NO   | PRI | NULL              | auto_increment    |
+| acc_no             | int           | YES  | MUL | NULL              |                   |
+| avail_balance      | decimal(10,2) | YES  |     | NULL              |                   |
+| statement_date     | timestamp     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++--------------------+---------------+------+-----+-------------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> describe deleted_customer;
++---------------+--------------+------+-----+-------------------+-------------------+
+| Field         | Type         | Null | Key | Default           | Extra             |
++---------------+--------------+------+-----+-------------------+-------------------+
+| deleted_id    | int          | NO   | PRI | NULL              | auto_increment    |
+| acc_no        | int          | YES  |     | NULL              |                   |
+| cust_name     | varchar(100) | YES  |     | NULL              |                   |
+| deletion_date | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++---------------+--------------+------+-----+-------------------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into customer values (100, 'Manu', 12000);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into customer values (101, 'Remya', 2500);
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into customer values (102, 'Anu', 13500);
+Query OK, 1 row affected (0.17 sec)
+
+mysql> insert into customer values (103, 'Sonu', 10000);
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into customer values (104, 'Achu', 12500);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> DELIMITER //
+mysql> CREATE TRIGGER after_customer_insert
+    -> AFTER INSERT ON customer
+    -> FOR EACH ROW
+    -> BEGIN
+    -> INSERT INTO customer_detail (acc_no, cust_name)
+    -> VALUES (NEW.acc_no, NEW.cust_name);
+    -> END;
+    -> //
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> DELIMITER ;
+mysql> INSERT INTO customer (acc_no, cust_name, avail_balance) VALUES (105, 'John Doe',
+    -> 5000);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select *from Customer_details
+    -> ;
+ERROR 1146 (42S02): Table 'librarymgmt.Customer_details' doesn't exist
+mysql> DELIMITER //
+mysql> CREATE TRIGGER update_customer
+    -> BEFORE UPDATE ON customer
+    -> FOR EACH ROW
+    -> BEGIN
+    -> INSERT INTO mini_statement (acc_no, avail_balance)
+    -> VALUES (OLD.acc_no, OLD.avail_balance);
+    -> END;
+    -> //
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> DELIMITER ;
+mysql> update customer set avail_balance = 15000 where acc_no = 101;
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customers;
+ERROR 1146 (42S02): Table 'librarymgmt.customers' doesn't exist
+mysql> select * from mini_statement;
++--------------+--------+---------------+---------------------+
+| statement_id | acc_no | avail_balance | statement_date      |
++--------------+--------+---------------+---------------------+
+|            1 |    101 |       2500.00 | 2025-09-25 10:54:25 |
++--------------+--------+---------------+---------------------+
+1 row in set (0.01 sec)
+
+mysql> ble balance into micro statement record after an update has occurred.
+    -> DELIMITER //
+    -> CREATE TRIGGER insert_new_customer
+    -> AFTER INSERT ON customer
+    -> FOR EACH ROW
+    -> BEGIN
+    -> INSERT INTO micro_statement (acc_no, avail_balance)
+    -> VALUES (NEW.acc_no, NEW.avail_balance);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ble balance into micro statement record after an update has occurred.
+DELIMITER ' at line 1
+mysql> END;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'END' at line 1
+mysql> //
+    -> DELIMITER ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '//
+DELIMITER' at line 1
+mysql> INSERT INTO customer (acc_no, cust_name, avail_balance) VALUES (106 'Doe', 1000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Doe', 1000)' at line 1
+mysql> DELIMITER //
+mysql> CREATE TRIGGER after_delete_store
+    -> AFTER DELETE ON customer
+    -> FOR EACH ROW
+    -> BEGIN
+    -> INSERT INTO deleted_customer (acc_no, cust_name)
+    -> VALUES (OLD.acc_no, OLD.cust_name);
+    -> END //
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> DELIMITER ;
+mysql> DELETE FROM customer WHERE acc_no = 102;
+Query OK, 1 row affected (0.13 sec)
+
+mysql> 
